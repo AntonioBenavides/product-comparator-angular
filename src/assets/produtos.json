@@ -1,0 +1,98 @@
+[
+  {
+    "id": "airpods-pro-2",
+    "name": "Apple AirPods Pro (2ª geração)",
+    "imageUrl": "https://example.com/images/airpods-pro-2.jpg",
+    "description": "Cancelamento ativo de ruído, som imersivo e modo ambiente adaptativo.",
+    "price": 1299.00,
+    "discount": 5,
+    "installments": 10,
+    "freeShipping": true,
+    "rating": {
+      "rate": 4.9,
+      "count": 254
+    },
+    "specs": {
+      "battery": "6h (30h com estojo)",
+      "bluetooth": "5.3",
+      "waterproof": "IPX4"
+    },
+    "vendor": {
+      "vendorName": "Apple",
+      "vendorCategory": "OFICIAL",
+      "vendorSales": 1000
+    }
+  },
+  {
+    "id": "galaxy-buds2-pro",
+    "name": "Samsung Galaxy Buds2 Pro",
+    "imageUrl": "https://example.com/images/galaxy-buds2-pro.jpg",
+    "description": "Som Hi-Fi, ANC inteligente e design ergonômico.",
+    "price": 899.00,
+    "discount": 6,
+    "installments": 5,
+    "freeShipping": true,
+    "rating": {
+      "rate": 4.8,
+      "count": 2541
+    },
+    "specs": {
+      "battery": "5h (18h com estojo)",
+      "bluetooth": "5.3",
+      "waterproof": "IPX7"
+    },
+    "vendor": {
+      "vendorName": "Samsung",
+      "vendorCategory": "OFICIAL",
+      "vendorSales": 10000
+    }
+  },
+  {
+    "id": "sony-wf-1000xm5",
+    "name": "Sony WF-1000XM5",
+    "imageUrl": "https://example.com/images/sony-wf-1000xm5.jpg",
+    "description": "Melhor cancelamento de ruído do mercado com áudio Hi-Res.",
+    "price": 1499.00,
+    "discount": 5,
+    "installments": 10,
+    "freeShipping": true,
+    "rating": {
+      "rate": 4.6,
+      "count": 1300
+    },
+    "specs": {
+      "battery": "8h (24h com estojo)",
+      "bluetooth": "5.3",
+      "waterproof": "IPX4"
+    },
+    "vendor": {
+      "vendorName": "Sony",
+      "vendorCategory": "OFICIAL",
+      "vendorSales": 2003
+    }
+  },
+  {
+    "id": "jbl-live-free-nc",
+    "name": "JBL Live Free NC+",
+    "imageUrl": "https://example.com/images/jbl-live-free-nc.jpg",
+    "description": "Tecnologia JBL Signature Sound e cancelamento ativo de ruído.",
+    "price": 599.00,
+    "discount": 8,
+    "installments": 5,
+    "freeShipping": true,
+    "rating": {
+      "rate": 4.8,
+      "count": 2288
+    },
+    "specs": {
+      "battery": "7h (21h com estojo)",
+      "bluetooth": "5.1",
+      "waterproof": "IPX7"
+    },
+    "vendor": {
+      "vendorName": "JBL",
+      "vendorCategory": "OFICIAL",
+      "vendorSales": 3003
+    }
+  }
+]

@@ -1,0 +1,220 @@
+<div class="product-comparator">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Carregando produtos...</p>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading">
+    <!-- Header Section -->
+    <div class="header-section">
+      <h1>Comparação de Produtos</h1>
+      <p>Compare características e especificações para encontrar o produto ideal para você.</p>
+    </div>
+
+    <!-- Controls Section -->
+    <div class="controls-section">
+      <div class="comparison-info">
+        <h2>Comparando {{ selectedProducts.length }} produtos</h2>
+      </div>
+      <div class="view-controls">
+        <span>Ver como:</span>
+        <button 
+          class="btn-view" 
+          [class.active]="viewMode === 'cards'"
+          (click)="setViewMode('cards')">
+          📱 Cartões
+        </button>
+        <button 
+          class="btn-view" 
+          [class.active]="viewMode === 'table'"
+          (click)="setViewMode('table')">
+          📊 Tabela
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Selection -->
+    <div class="product-selection" *ngIf="selectedProducts.length < maxComparison">
+      <h3>Selecione produtos para comparar:</h3>
+      <div class="product-grid">
+        <div 
+          *ngFor="let product of products" 
+          class="product-selector"
+          [class.selected]="isProductSelected(product)"
+          (click)="toggleProductSelection(product)">
+          <img [src]="product.imageUrl" [alt]="product.name" />
+          <span>{{ product.name }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards View -->
+    <div class="products-comparison" *ngIf="viewMode === 'cards' && selectedProducts.length > 0">
+      <div class="product-cards">
+        <div *ngFor="let product of selectedProducts" class="product-card">
+          <!-- Discount Badge -->
+          <div class="discount-badge" *ngIf="product.discount > 0">
+            {{ product.discount }}% OFF
+          </div>
+
+          <!-- Product Image -->
+          <div class="product-image">
+            <img [src]="product.imageUrl" [alt]="product.name" />
+          </div>
+
+          <!-- Free Shipping -->
+          <div class="free-shipping" *ngIf="product.freeShipping">
+            ✅ Envio grátis
+          </div>
+
+          <!-- Product Info -->
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+            
+            <!-- Rating -->
+            <div class="rating">
+              <div class="stars">
+                <span 
+                  *ngFor="let filled of generateStars(product.rating.rate)" 
+                  class="star"
+                  [class.filled]="filled">
+                  ⭐
+                </span>
+              </div>
+              <span class="rating-count">({{ product.rating.count }})</span>
+            </div>
+
+            <!-- Price -->
+            <div class="price-section">
+              <div class="original-price" *ngIf="product.discount > 0">
+                {{ formatPrice(product.price) }}
+              </div>
+              <div class="discounted-price">
+                {{ formatPrice(calculateDiscountedPrice(product)) }}
+                <span class="discount-percent" *ngIf="product.discount > 0">
+                  {{ product.discount }}% OFF
+                </span>
+              </div>
+              <div class="installments">
+                12x {{ formatPrice(calculateDiscountedPrice(product) / 12) }} sem juros
+              </div>
+            </div>
+
+            <!-- Vendor -->
+            <div class="vendor-info">
+              <span class="vendor-name">Vendido por {{ product.vendor.vendorName }}</span>
+              <span class="vendor-category">{{ product.vendor.vendorCategory }}</span>
+              <span class="vendor-sales">{{ product.vendor.vendorSales }} vendas</span>
+            </div>
+
+            <!-- Actions -->
+            <div class="product-actions">
+              <button class="btn-buy">Comprar</button>
+              <button class="btn-favorite">❤️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs Section -->
+    <div class="tabs-section" *ngIf="selectedProducts.length > 0">
+      <div class="tabs">
+        <button 
+          class="tab"
+          [class.active]="activeTab === 'resumen'"
+          (click)="setActiveTab('resumen')">
+          Resumo
+        </button>
+        <button 
+          class="tab"
+          [class.active]="activeTab === 'especificaciones'"
+          (click)="setActiveTab('especificaciones')">
+          Especificações
+        </button>
+        <button 
+          class="tab"
+          [class.active]="activeTab === 'medios'"
+          (click)="setActiveTab('medios')">
+          Meios de Pagamento
+        </button>
+      </div>
+
+      <!-- Specifications Table -->
+      <div class="tab-content" *ngIf="activeTab === 'especificaciones'">
+        <div class="specifications-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Especificação</th>
+                <th *ngFor="let product of selectedProducts">
+                  <div class="product-header">
+                    <img [src]="product.imageUrl" [alt]="product.name" />
+                    <span>{{ product.name }}</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Bateria</strong></td>
+                <td *ngFor="let product of selectedProducts">{{ product.specs.battery }}</td>
+              </tr>
+              <tr>
+                <td><strong>Bluetooth</strong></td>
+                <td *ngFor="let product of selectedProducts">{{ product.specs.bluetooth }}</td>
+              </tr>
+              <tr>
+                <td><strong>Resistência à Água</strong></td>
+                <td *ngFor="let product of selectedProducts">{{ product.specs.waterproof }}</td>
+              </tr>
+              <tr>
+                <td><strong>Preço</strong></td>
+                <td *ngFor="let product of selectedProducts">
+                  {{ formatPrice(calculateDiscountedPrice(product)) }}
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Avaliação</strong></td>
+                <td *ngFor="let product of selectedProducts">
+                  {{ product.rating.rate }}/5 ({{ product.rating.count }} avaliações)
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Resume Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'resumen'">
+        <div class="resume-content">
+          <h3>Resumo da Comparação</h3>
+          <div *ngFor="let product of selectedProducts" class="product-summary">
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.description }}</p>
+            <div class="summary-highlights">
+              <span class="highlight">{{ formatPrice(calculateDiscountedPrice(product)) }}</span>
+              <span class="highlight">{{ product.rating.rate }}/5 ⭐</span>
+              <span class="highlight" *ngIf="product.freeShipping">Frete Grátis</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Methods Tab -->
+      <div class="tab-content" *ngIf="activeTab === 'medios'">
+        <div class="payment-methods">
+          <h3>Meios de Pagamento Aceitos</h3>
+          <div class="payment-options">
+            <div class="payment-method">💳 Cartão de Crédito</div>
+            <div class="payment-method">💰 PIX</div>
+            <div class="payment-method">🏦 Boleto Bancário</div>
+            <div class="payment-method">📱 Carteiras Digitais</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
